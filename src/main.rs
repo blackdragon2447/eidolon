@@ -125,7 +125,7 @@ fn update_all(check_gog: bool, config: Config) {
 fn show_menu(menu_command: &str) {
     use games::*;
     // Creates a list of all installed games, then pipes them to a dmenu rofi
-    let mut entries = get_games();
+    let mut entries = get_game_names();
     entries.sort_by(|a, b| a.cmp(&b));
     let mut game_list = String::new();
     for entry in entries {

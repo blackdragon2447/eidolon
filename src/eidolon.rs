@@ -99,7 +99,11 @@ pub mod games {
                     .create(true)
                     .write(true)
                     .open(gd() + &game.name + ".json")
-                    .expect(&format!("Can't open {}{}.json for writing", gd(), &game.name))
+                    .expect(&format!(
+                        "Can't open {}{}.json for writing",
+                        gd(),
+                        &game.name
+                    ))
                     .write_all(serde_json::to_string(&game).unwrap().as_bytes())
                     .unwrap();
                 println!("  Made shortcut for {}", game.pname);
@@ -124,6 +128,9 @@ pub mod games {
                     .replace(".json", "")
             })
             .collect::<Vec<String>>()
+    }
+    pub fn get_game_names() -> Vec<String> {
+        get_games().iter().map(read_game).map(|g| g.pname).collect()
     }
     /// Prints currently installed games
     pub fn list_games() {
@@ -593,7 +600,7 @@ pub mod config {
                     .to_string(),
                 prefix_command: "".to_string(),
                 blocked: default_blocked(),
-                autoscan: false
+                autoscan: false,
             }
         }
     }
@@ -623,7 +630,7 @@ pub mod config {
             menu_command: String::from(old.menu_command),
             prefix_command: String::from(old.prefix_command),
             blocked: default_blocked(),
-            autoscan: false
+            autoscan: false,
         };
         info!("Creating and writing to new config file");
         OpenOptions::new()
